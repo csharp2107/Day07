@@ -17,5 +17,7 @@ namespace EntityFrameworkCodeFirst
         public virtual ICollection<Grade> Grades { get; set; }
 
         public virtual StudentAddress Address { get; set; }
+
+        public virtual ICollection<Course> Courses { get; set; }
     }
 }

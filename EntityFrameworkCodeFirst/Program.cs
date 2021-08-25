@@ -10,6 +10,10 @@ namespace EntityFrameworkCodeFirst
     {
         static void Main(string[] args)
         {
+            using (var ctx = new DBSchoolContext())
+            {
+                Console.WriteLine(ctx.Grades.Count() ); 
+            }
         }
     }
 }

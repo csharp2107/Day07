@@ -13,7 +13,14 @@ namespace EntityFrameworkCodeFirst
         public DBSchoolContext() : base("CSDBSchool")
         {
             //TODO: set initializer for db strategy
-            Database.SetInitializer<DBSchoolContext>(null);
+            Database.SetInitializer<DBSchoolContext>(new DBSchoolInit());
         }
+
+        // declare entities in the db context
+        public DbSet<Student> Students { get; set; }
+        public DbSet<Grade> Grades { get; set; }
+        public DbSet<Course> Courses { get; set; }
+        public DbSet<StudentAddress> StudentAddresses { get; set; }
+        public DbSet<Teacher> Teachers { get; set; }
     }
 }
