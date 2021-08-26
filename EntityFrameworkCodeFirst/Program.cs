@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -55,6 +56,24 @@ namespace EntityFrameworkCodeFirst
 
                 ctx.SaveChanges(); // store changes to db
 
+                // SQL raw command execution
+                var studentList = ctx.Students.SqlQuery("SELECT * FROM Students").ToList<Student>();
+                foreach (var st in studentList)
+                {
+                    Console.WriteLine($"{st.StudentID}, {st.StudentName}");
+                }
+
+                int studentId = 10;
+                String sql = "SELECT StudentName FROM Students WHERE StudentID=" + studentId;
+                //string studName = ctx.Database.
+                //    SqlQuery<String>("SELECT StudentName FROM Students WHERE StudentID=1 ").FirstOrDefault();
+                string studName = ctx.Database.
+                    SqlQuery<String>("SELECT StudentName FROM Students WHERE StudentID=@id", 
+                    new SqlParameter("@id",1) ).
+                    FirstOrDefault();
+
+                Console.WriteLine($"Student name: {studName}");
+
                 // update DOB for Student with StudentID=1
                 student = ctx.Students.Find(1);
                 student.DateOfBirth = new DateTime(2002, 12, 12);
@@ -66,6 +85,7 @@ namespace EntityFrameworkCodeFirst
                 //ctx.Entry(student).State = System.Data.Entity.EntityState.Deleted;
                 ctx.Students.Remove(student);
                 ctx.SaveChanges();
+                
 
                 ctx.Database.Connection.Close();
 
