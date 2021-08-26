@@ -16,6 +16,11 @@ namespace EntityFrameworkCodeFirst
             Database.SetInitializer<DBSchoolContext>(new DBSchoolInit());
         }
 
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Configurations.Add(new StudentConfiguration());
+        }
+
         // declare entities in the db context
         public DbSet<Student> Students { get; set; }
         public DbSet<Grade> Grades { get; set; }
