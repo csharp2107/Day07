@@ -7,6 +7,13 @@ using System.Threading.Tasks;
 
 namespace EntityFrameworkCodeFirst
 {
+
+    class DbResult
+    {
+        public int Studentid { get; set; }
+        public string Studentname { get; set; }
+    }
+
     class Program
     {
         static void Main(string[] args)
@@ -71,6 +78,14 @@ namespace EntityFrameworkCodeFirst
                     SqlQuery<String>("SELECT StudentName FROM Students WHERE StudentID=@id", 
                     new SqlParameter("@id",1) ).
                     FirstOrDefault();
+
+                var sqlRes = ctx.Database.
+                    SqlQuery<DbResult>("SELECT StudentID, StudentName FROM Students ");
+                foreach (var item in sqlRes)
+                {
+                    Console.WriteLine($"{item.Studentid}, {item.Studentname}");
+                }
+                   
 
                 Console.WriteLine($"Student name: {studName}");
 
